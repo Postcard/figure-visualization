@@ -1,5 +1,5 @@
 module.exports = {
 
-  test: require('./charts/test')
+  Test: require('./charts/test')
 
 };
