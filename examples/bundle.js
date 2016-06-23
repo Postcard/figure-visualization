@@ -146,9 +146,9 @@ var BarChart = function (_React$Component) {
       // x axis
       var xAxis = _d32['default'].svg.axis().scale(x).orient("bottom");
 
-      if (options.axis.x.ticks) {
+      if (options.axis.x.tickValues) {
         xAxis.tickValues(x.domain().filter(function (d, i) {
-          return options.axis.x.ticks.indexOf(d) > -1;
+          return options.axis.x.tickValues.indexOf(d) > -1;
         }));
       }
 
@@ -389,7 +389,7 @@ Examples.defaultProps = {
 				}
 			},
 			x: {
-				ticks: ['A', 'D']
+				tickValues: ['A', 'D']
 			}
 		}
 	},

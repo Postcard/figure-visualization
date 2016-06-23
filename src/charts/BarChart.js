@@ -64,8 +64,8 @@ class BarChart extends React.Component {
       .scale(x)
       .orient("bottom");
 
-    if(options.axis.x.ticks){
-      xAxis.tickValues(x.domain().filter(function(d, i) { return options.axis.x.ticks.indexOf(d) > -1; }))
+    if(options.axis.x.tickValues){
+      xAxis.tickValues(x.domain().filter(function(d, i) { return options.axis.x.tickValues.indexOf(d) > -1; }))
     } 
 
     chart.append("g")

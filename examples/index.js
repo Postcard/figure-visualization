@@ -27,7 +27,7 @@ Examples.defaultProps = {
 				format:(d)=>{return d+'%'}
 			},
 			x:{
-				ticks:['A', 'D']
+				tickValues:['A', 'D']
 			}
 		}
 	},
