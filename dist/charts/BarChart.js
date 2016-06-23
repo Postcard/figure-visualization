@@ -93,13 +93,13 @@ var BarChart = (function (_React$Component) {
       var yMax = _utils2['default'].round(_d32['default'].max(data.values, function (o) {
         return o[data.y];
       }), 'sup');
-      if (this.props.options.axis.y.min && this.props.options.axis.y.min < yMin) {
-        yMin = this.props.options.axis.y.min;
+      if (options.axis.y.min && options.axis.y.min < yMin) {
+        yMin = options.axis.y.min;
       } else if (yMin > 0) {
         yMin = 0;
       }
-      if (this.props.options.axis.y.max && this.props.options.axis.y.max > yMax) {
-        yMax = this.props.options.axis.y.max;
+      if (options.axis.y.max && options.axis.y.max > yMax) {
+        yMax = options.axis.y.max;
       }
 
       y.domain([yMin, yMax]);
@@ -183,10 +183,6 @@ BarChart.propTypes = {
   }),
   width: _react2['default'].PropTypes.number.isRequired,
   height: _react2['default'].PropTypes.number.isRequired
-};
-
-BarChart.defaultProps = {
-  options: {}
 };
 
 exports['default'] = BarChart;

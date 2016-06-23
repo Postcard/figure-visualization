@@ -30,7 +30,7 @@ class BarChart extends React.Component {
           format:(d)=>{return d;}
         }
       }
-    }, this.props.options);
+    }, this.props.options)
 
 
     // chart container
@@ -52,9 +52,9 @@ class BarChart extends React.Component {
 
     let yMin = utils.round(d3.min(data.values, function(o) { return o[data.y]; }), 'inf');
     let yMax = utils.round(d3.max(data.values, function(o) { return o[data.y]; }), 'sup');
-    if(this.props.options.axis.y.min && this.props.options.axis.y.min < yMin){ yMin = this.props.options.axis.y.min }
+    if(options.axis.y.min && options.axis.y.min < yMin){ yMin = options.axis.y.min }
     else if(yMin > 0){ yMin = 0 }
-    if(this.props.options.axis.y.max && this.props.options.axis.y.max > yMax){ yMax = this.props.options.axis.y.max }
+    if(options.axis.y.max && options.axis.y.max > yMax){ yMax = options.axis.y.max }
 
     y.domain([yMin, yMax]);
 
@@ -143,9 +143,5 @@ BarChart.propTypes = {
   width: React.PropTypes.number.isRequired,
   height: React.PropTypes.number.isRequired
 };
-
-BarChart.defaultProps = {
-  options:{}
-}
 
 export default BarChart
