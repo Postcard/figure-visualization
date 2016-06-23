@@ -24,6 +24,7 @@
     "babel-eslint": "4.0.10",
     "babel-runtime": "5.8.20",
     "d3": "^3.5.17",
+    "lodash": "^4.13.1",
     "react": "^0.14.x",
     "react-dom": "^0.14.x",
     "react-faux-dom": "^2.5.0"

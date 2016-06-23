@@ -2,6 +2,6 @@
 
 module.exports = {
 
-  Test: require('./charts/test')
+  BarChart: require('./charts/BarChart')
 
 };
