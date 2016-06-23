@@ -79,23 +79,24 @@ class BarChart extends React.Component {
 
 
     let first_tick = yAxis.append("g").attr("class", "tick").attr("transform", "translate(0," + y(y_axis_scale(0)) + ")");
-    first_tick.append("text").attr("x", 2).attr("y", -7).attr("dy", ".32em").text(options.axis.y.format(y_axis_scale(0)));
+    first_tick.append("text").attr("x", 2).attr("y", -7).attr("dy", ".32em").text(options.axis.y.format(y_axis_scale(0))).attr("fill", utils.colors.grey);
+    first_tick.append("line").attr("x0", padding.left).attr("x2", width - padding.right).attr("stroke", utils.colors.black);
 
     let second_tick = yAxis.append("g").attr("class", "tick").attr("transform", "translate(0," + y(y_axis_scale(1)) + ")");
-    second_tick.append("text").attr("x", 2).attr("y", -7).attr("dy", ".32em").text(options.axis.y.format(y_axis_scale(1)));
-    second_tick.append("line").attr("x0", 0).attr("x2", width - padding.right);
+    second_tick.append("text").attr("x", 2).attr("y", -7).attr("dy", ".32em").text(options.axis.y.format(y_axis_scale(1))).attr("fill", utils.colors.grey);
+    second_tick.append("line").attr("x0", padding.left).attr("x2", width - padding.right).attr("stroke", utils.colors.grey);
   
     let third_tick = yAxis.append("g").attr("class", "tick").attr("transform", "translate(0," + y(y_axis_scale(2)) + ")");
-    third_tick.append("text").attr("x", 2).attr("y", -7).attr("dy", ".32em").text(options.axis.y.format(y_axis_scale(2)));
-    third_tick.append("line").attr("x0", 0).attr("x2", width - padding.right);
+    third_tick.append("text").attr("x", 2).attr("y", -7).attr("dy", ".32em").text(options.axis.y.format(y_axis_scale(2))).attr("fill", utils.colors.grey);
+    third_tick.append("line").attr("x0", padding.left).attr("x2", width - padding.right).attr("stroke", utils.colors.grey);
 
     let fourth_tick = yAxis.append("g").attr("class", "tick").attr("transform", "translate(0," + y(y_axis_scale(3)) + ")");
-    fourth_tick.append("text").attr("x", 2).attr("y", -7).attr("dy", ".32em").text(options.axis.y.format(y_axis_scale(3)));
-    fourth_tick.append("line").attr("x0", 0).attr("x2", width - padding.right);
+    fourth_tick.append("text").attr("x", 2).attr("y", -7).attr("dy", ".32em").text(options.axis.y.format(y_axis_scale(3))).attr("fill", utils.colors.grey);
+    fourth_tick.append("line").attr("x0", padding.left).attr("x2", width - padding.right).attr("stroke", utils.colors.grey);
   
     let fith_tick = yAxis.append("g").attr("class", "tick").attr("transform", "translate(0," + y(y_axis_scale(4)) + ")");
-    fith_tick.append("text").attr("x", 2).attr("y", -7).attr("dy", ".32em").text(options.axis.y.format(y_axis_scale(4)));
-    fith_tick.append("line").attr("x0", 0).attr("x2", width - padding.right);
+    fith_tick.append("text").attr("x", 2).attr("y", -7).attr("dy", ".32em").text(options.axis.y.format(y_axis_scale(4))).attr("fill", utils.colors.grey);
+    fith_tick.append("line").attr("x0", padding.left).attr("x2", width - padding.right).attr("stroke", utils.colors.grey);
 
 
 
@@ -111,7 +112,8 @@ class BarChart extends React.Component {
     bar.append("rect")
       .attr("y", function(d) { return y(d[data.y]) + padding.top; })
       .attr("height", function(d) { return (height - padding.bottom - padding.top) - y(d[data.y]); })
-      .attr("width", barWidth - 1);
+      .attr("width", barWidth - 1)
+      .attr("fill", utils.colors.defaultColor);
 
     return (
       <div>

@@ -116,23 +116,24 @@ var BarChart = (function (_React$Component) {
       y_axis_scale.domain([0, 4]).range(y.domain());
 
       var first_tick = yAxis.append("g").attr("class", "tick").attr("transform", "translate(0," + y(y_axis_scale(0)) + ")");
-      first_tick.append("text").attr("x", 2).attr("y", -7).attr("dy", ".32em").text(options.axis.y.format(y_axis_scale(0)));
+      first_tick.append("text").attr("x", 2).attr("y", -7).attr("dy", ".32em").text(options.axis.y.format(y_axis_scale(0))).attr("fill", _utils2['default'].colors.grey);
+      first_tick.append("line").attr("x0", padding.left).attr("x2", width - padding.right).attr("stroke", _utils2['default'].colors.black);
 
       var second_tick = yAxis.append("g").attr("class", "tick").attr("transform", "translate(0," + y(y_axis_scale(1)) + ")");
-      second_tick.append("text").attr("x", 2).attr("y", -7).attr("dy", ".32em").text(options.axis.y.format(y_axis_scale(1)));
-      second_tick.append("line").attr("x0", 0).attr("x2", width - padding.right);
+      second_tick.append("text").attr("x", 2).attr("y", -7).attr("dy", ".32em").text(options.axis.y.format(y_axis_scale(1))).attr("fill", _utils2['default'].colors.grey);
+      second_tick.append("line").attr("x0", padding.left).attr("x2", width - padding.right).attr("stroke", _utils2['default'].colors.grey);
 
       var third_tick = yAxis.append("g").attr("class", "tick").attr("transform", "translate(0," + y(y_axis_scale(2)) + ")");
-      third_tick.append("text").attr("x", 2).attr("y", -7).attr("dy", ".32em").text(options.axis.y.format(y_axis_scale(2)));
-      third_tick.append("line").attr("x0", 0).attr("x2", width - padding.right);
+      third_tick.append("text").attr("x", 2).attr("y", -7).attr("dy", ".32em").text(options.axis.y.format(y_axis_scale(2))).attr("fill", _utils2['default'].colors.grey);
+      third_tick.append("line").attr("x0", padding.left).attr("x2", width - padding.right).attr("stroke", _utils2['default'].colors.grey);
 
       var fourth_tick = yAxis.append("g").attr("class", "tick").attr("transform", "translate(0," + y(y_axis_scale(3)) + ")");
-      fourth_tick.append("text").attr("x", 2).attr("y", -7).attr("dy", ".32em").text(options.axis.y.format(y_axis_scale(3)));
-      fourth_tick.append("line").attr("x0", 0).attr("x2", width - padding.right);
+      fourth_tick.append("text").attr("x", 2).attr("y", -7).attr("dy", ".32em").text(options.axis.y.format(y_axis_scale(3))).attr("fill", _utils2['default'].colors.grey);
+      fourth_tick.append("line").attr("x0", padding.left).attr("x2", width - padding.right).attr("stroke", _utils2['default'].colors.grey);
 
       var fith_tick = yAxis.append("g").attr("class", "tick").attr("transform", "translate(0," + y(y_axis_scale(4)) + ")");
-      fith_tick.append("text").attr("x", 2).attr("y", -7).attr("dy", ".32em").text(options.axis.y.format(y_axis_scale(4)));
-      fith_tick.append("line").attr("x0", 0).attr("x2", width - padding.right);
+      fith_tick.append("text").attr("x", 2).attr("y", -7).attr("dy", ".32em").text(options.axis.y.format(y_axis_scale(4))).attr("fill", _utils2['default'].colors.grey);
+      fith_tick.append("line").attr("x0", padding.left).attr("x2", width - padding.right).attr("stroke", _utils2['default'].colors.grey);
 
       // bars
       var barWidth = (width - padding.left - padding.right) / x.domain().length;
@@ -145,7 +146,7 @@ var BarChart = (function (_React$Component) {
         return y(d[data.y]) + padding.top;
       }).attr("height", function (d) {
         return height - padding.bottom - padding.top - y(d[data.y]);
-      }).attr("width", barWidth - 1);
+      }).attr("width", barWidth - 1).attr("fill", _utils2['default'].colors.defaultColor);
 
       return _react2['default'].createElement(
         'div',

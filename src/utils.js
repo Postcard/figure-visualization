@@ -1,7 +1,12 @@
 import d3 from 'd3';
 
 let colors = {};
-colors.defaultColor = "#7fcdbb";
+colors.grey = '#D1D1D1';
+colors.lightgrey = "#F5F5F5";
+colors.darkgrey = '#9B9B9B';
+colors.darkergrey = '#6B6B6B';
+colors.black = '#000';
+colors.defaultColor = colors.black;
 colors.qualityColors = ["#f16b46", "#f1885c", "#f1b67d", "#f1da99", "#edf8b1", "#c9f8b1", "#a1edae", "#7adea5", "#42cd8f"];
 colors.quantityColors = ["#ffffd9", "#edf8b1", "#c7e9b4", "#7fcdbb", "#41b6c4", "#1d91c0", "#225ea8", "#25349e", "#081d58"];
 colors.categoricalColors = ["#7fcdbb", "#ff7f0e", "#1f77b4", "#aec7e8", "#ffbb78", "#2ca02c", "#98df8a", "#d62728", "#ff9896", "#9467bd", "#c5b0d5", "#8c564b", "#c49c94", "#e377c2", "#f7b6d2", "#7f7f7f", "#c7c7c7", "#bcbd22", "#dbdb8d", "#17becf", "#9edae5"];
@@ -18,7 +23,6 @@ let css = `
         svg.figure-visualization .axis path,
         svg.figure-visualization .axis line {
           fill: none;
-          stroke: #000;
           shape-rendering: crispEdges;
         }
         svg.figure-visualization .axis.x line, svg.figure-visualization .axis.x path {
