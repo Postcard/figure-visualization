@@ -144,4 +144,8 @@ BarChart.propTypes = {
   height: React.PropTypes.number.isRequired
 };
 
+BarChart.defaultProps = {
+  options:{}
+}
+
 export default BarChart

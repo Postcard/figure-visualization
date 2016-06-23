@@ -185,5 +185,9 @@ BarChart.propTypes = {
   height: _react2['default'].PropTypes.number.isRequired
 };
 
+BarChart.defaultProps = {
+  options: {}
+};
+
 exports['default'] = BarChart;
 module.exports = exports['default'];
