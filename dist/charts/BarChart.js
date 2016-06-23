@@ -107,6 +107,12 @@ var BarChart = (function (_React$Component) {
       // x axis
       var xAxis = _d32['default'].svg.axis().scale(x).orient("bottom");
 
+      if (options.axis.x.ticks) {
+        xAxis.tickValues(x.domain().filter(function (d, i) {
+          return options.axis.x.ticks.indexOf(d) > -1;
+        }));
+      }
+
       chart.append("g").attr("class", "x axis").attr("transform", "translate(" + padding.left + "," + (height - padding.bottom) + ")").call(xAxis);
 
       // custom y axis
@@ -173,7 +179,8 @@ BarChart.propTypes = {
   options: _react2['default'].PropTypes.shape({
     axis: _react2['default'].PropTypes.shape({
       x: _react2['default'].PropTypes.shape({
-        format: _react2['default'].PropTypes.func
+        format: _react2['default'].PropTypes.func,
+        tickValues: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.string)
       }),
       y: _react2['default'].PropTypes.shape({
         format: _react2['default'].PropTypes.func,

@@ -25,6 +25,9 @@ Examples.defaultProps = {
 			y:{
 				max:10,
 				format:(d)=>{return d+'%'}
+			},
+			x:{
+				ticks:['A', 'D']
 			}
 		}
 	},

@@ -64,6 +64,10 @@ class BarChart extends React.Component {
       .scale(x)
       .orient("bottom");
 
+    if(options.axis.x.ticks){
+      xAxis.tickValues(x.domain().filter(function(d, i) { return options.axis.x.ticks.indexOf(d) > -1; }))
+    } 
+
     chart.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(" + padding.left + "," + (height - padding.bottom) + ")")
@@ -134,6 +138,7 @@ BarChart.propTypes = {
     axis : React.PropTypes.shape({
       x: React.PropTypes.shape({
         format: React.PropTypes.func,
+        tickValues: React.PropTypes.arrayOf(React.PropTypes.string),
       }),
       y: React.PropTypes.shape({
         format: React.PropTypes.func,
