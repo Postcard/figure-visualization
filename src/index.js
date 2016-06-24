@@ -1,5 +1,6 @@
 module.exports = {
 
-  BarChart: require('./charts/BarChart')
+  BarChart: require('./charts/BarChart'),
+  Leaderboard: require('./charts/Leaderboard')
 
 };
