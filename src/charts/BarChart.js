@@ -35,7 +35,7 @@ class BarChart extends React.Component {
 
     // chart container
     let chart = d3.select(ReactFauxDOM.createElement('svg'))
-      .attr('class', 'figure-visualization')
+      .attr('class', 'figure-visualization barchart')
       .attr({
         width: width,
         height: height

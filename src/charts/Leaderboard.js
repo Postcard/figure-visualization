@@ -5,7 +5,7 @@ import ReactFauxDOM from 'react-faux-dom';
 import utils from './../utils';
 import {merge} from 'lodash';
 
-class BarChart extends React.Component {
+class Leaderboard extends React.Component {
 
   constructor(props) {
     super(props);
@@ -17,6 +17,9 @@ class BarChart extends React.Component {
 
     const css = `
       ${utils.css}
+      .figure-visualization.leaderboard {
+        font-size: inherit;
+      }
     `
 
     let {data, width, height} = this.props;
@@ -31,7 +34,7 @@ class BarChart extends React.Component {
 
     // chart container
     let chart = d3.select(ReactFauxDOM.createElement('div'))
-      .attr('class', 'figure-visualization')
+      .attr('class', 'figure-visualization leaderboard')
       .attr({
         width: width,
         height: height
@@ -40,7 +43,8 @@ class BarChart extends React.Component {
 
     // scale
     let x = d3.scale.linear()
-        .range([width, 0]);
+        .clamp(true)
+        .range([0, 100]);
 
     let xMin = utils.round(d3.min(data.values, function(o) { return o[data.x]; }), 'inf');
     let xMax = utils.round(d3.max(data.values, function(o) { return o[data.x]; }), 'sup');
@@ -54,7 +58,20 @@ class BarChart extends React.Component {
       .data(data.values)
       .enter()
       .append('div')
-      .text(function(d){return d[data.x]});
+      .each(function(d, i) {
+
+          let row = d3.select(this);
+          let labels = row.append('div').style(i > 0 ? {'margin-top':'0.25em'} : null);
+          
+          labels.append('span').text(function(d){return d[data.y]});
+          labels.append('span').text(function(d){return options.axis.x.format(d[data.x])}).style({'text-align':'right', 'float':'right'});
+
+
+          let bar_container = row.append('div').style({'position':'relative', 'height':'0.4em', 'width':'100%', 'background-color':utils.colors.grey});
+          let bar = bar_container.append('div').style({'position':'absolute', 'top':'0px', 'left':'0px', 'height':'100%', 'width':x(d[data.x])+'%', 'background-color':utils.colors.defaultColor});
+              
+      });
+      
 
 
     return (
@@ -66,7 +83,7 @@ class BarChart extends React.Component {
   }
 }
 
-BarChart.propTypes = {
+Leaderboard.propTypes = {
   data: React.PropTypes.shape({
     y: React.PropTypes.string.isRequired,
     x: React.PropTypes.string.isRequired,
@@ -85,4 +102,4 @@ BarChart.propTypes = {
   height: React.PropTypes.number.isRequired
 };
 
-export default BarChart
+export default Leaderboard

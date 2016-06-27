@@ -74,7 +74,7 @@ var BarChart = (function (_React$Component) {
       }, this.props.options);
 
       // chart container
-      var chart = _d32['default'].select(_reactFauxDom2['default'].createElement('svg')).attr('class', 'figure-visualization').attr({
+      var chart = _d32['default'].select(_reactFauxDom2['default'].createElement('svg')).attr('class', 'figure-visualization barchart').attr({
         width: width,
         height: height
       });

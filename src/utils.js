@@ -15,7 +15,7 @@ colors.categoricalColorsScale = d3.scale.ordinal().range(colors.categoricalColor
 colors.quantityColorsScale = d3.scale.quantile().range(colors.quantityColors);
 
 let css = `
-      	svg.figure-visualization .axis {
+      	.figure-visualization {
           font-size: 10px;
           font-family: inherit;
         }

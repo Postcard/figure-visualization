@@ -24,7 +24,7 @@ colors.qualityColorsScale = _d32['default'].scale.quantile().range(colors.qualit
 colors.categoricalColorsScale = _d32['default'].scale.ordinal().range(colors.categoricalColors);
 colors.quantityColorsScale = _d32['default'].scale.quantile().range(colors.quantityColors);
 
-var css = '\n      \tsvg.figure-visualization .axis {\n          font-size: 10px;\n          font-family: inherit;\n        }\n\n        svg.figure-visualization .axis path,\n        svg.figure-visualization .axis line {\n          fill: none;\n          shape-rendering: crispEdges;\n        }\n        svg.figure-visualization .axis.x line, svg.figure-visualization .axis.x path {\n          fill: none;\n          stroke: none;\n        }\n    ';
+var css = '\n      \t.figure-visualization {\n          font-size: 10px;\n          font-family: inherit;\n        }\n\n        svg.figure-visualization .axis path,\n        svg.figure-visualization .axis line {\n          fill: none;\n          shape-rendering: crispEdges;\n        }\n        svg.figure-visualization .axis.x line, svg.figure-visualization .axis.x path {\n          fill: none;\n          stroke: none;\n        }\n    ';
 
 var round = function round(n, dir) {
 
