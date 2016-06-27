@@ -543,13 +543,15 @@ var Tooltip = function (_React$Component) {
   }, {
     key: 'setPosition',
     value: function setPosition(e) {
+      var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
       var tooltipHeight = this.refs.tooltip.offsetHeight;
+      var tooltipWidth = this.refs.tooltip.offsetWidth;
       var x = e.clientX;
       var y = e.clientY;
       var gap = 5;
       this.setState({
-        top: y - gap - tooltipHeight,
-        left: x + gap
+        top: y <= tooltipHeight + gap ? gap : y - gap - tooltipHeight,
+        left: x >= width - gap - tooltipWidth ? width - gap - tooltipWidth : x + gap
       });
     }
   }, {
@@ -690,6 +692,10 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _index = require('./../dist/index.js');
 
+var _Tooltip = require('./../dist/shared/Tooltip');
+
+var _Tooltip2 = _interopRequireDefault(_Tooltip);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -827,6 +833,11 @@ var Examples = function (_React$Component) {
 			return _react2.default.createElement(
 				'div',
 				{ ref: 'container', style: { width: '40%', margin: 'auto', padding: '60px 0px' } },
+				_react2.default.createElement(
+					_Tooltip2.default,
+					null,
+					'coucou'
+				),
 				this.state.width && _react2.default.createElement(
 					'div',
 					null,
@@ -862,7 +873,7 @@ var Examples = function (_React$Component) {
 
 _reactDom2.default.render(_react2.default.createElement(Examples, null), document.getElementById('container'));
 
-},{"./../dist/index.js":3,"react":181,"react-dom":41}],7:[function(require,module,exports){
+},{"./../dist/index.js":3,"./../dist/shared/Tooltip":4,"react":181,"react-dom":41}],7:[function(require,module,exports){
 !function() {
   var d3 = {
     version: "3.5.17"

@@ -51,13 +51,15 @@ var Tooltip = (function (_React$Component) {
   }, {
     key: 'setPosition',
     value: function setPosition(e) {
+      var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
       var tooltipHeight = this.refs.tooltip.offsetHeight;
+      var tooltipWidth = this.refs.tooltip.offsetWidth;
       var x = e.clientX;
       var y = e.clientY;
       var gap = 5;
       this.setState({
-        top: y - gap - tooltipHeight,
-        left: x + gap
+        top: y <= tooltipHeight + gap ? gap : y - gap - tooltipHeight,
+        left: x >= width - gap - tooltipWidth ? width - gap - tooltipWidth : x + gap
       });
     }
   }, {

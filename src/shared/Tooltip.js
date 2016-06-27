@@ -22,13 +22,17 @@ class Tooltip extends React.Component {
   }
 
   setPosition(e){
+    let width = window.innerWidth
+             || document.documentElement.clientWidth
+             || document.body.clientWidth;
     let tooltipHeight = this.refs.tooltip.offsetHeight;
+    let tooltipWidth = this.refs.tooltip.offsetWidth;
     let x = e.clientX;
     let y = e.clientY;
     let gap = 5;
     this.setState({
-      top: (y - gap - tooltipHeight),
-      left: (x + gap)
+      top: y <= (tooltipHeight + gap) ? gap : (y - gap - tooltipHeight),
+      left: x >= (width - gap - tooltipWidth) ? (width - gap - tooltipWidth) : (x + gap)
     });
   }
 
