@@ -692,10 +692,6 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _index = require('./../dist/index.js');
 
-var _Tooltip = require('./../dist/shared/Tooltip');
-
-var _Tooltip2 = _interopRequireDefault(_Tooltip);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -833,11 +829,6 @@ var Examples = function (_React$Component) {
 			return _react2.default.createElement(
 				'div',
 				{ ref: 'container', style: { width: '40%', margin: 'auto', padding: '60px 0px' } },
-				_react2.default.createElement(
-					_Tooltip2.default,
-					null,
-					'coucou'
-				),
 				this.state.width && _react2.default.createElement(
 					'div',
 					null,
@@ -873,7 +864,7 @@ var Examples = function (_React$Component) {
 
 _reactDom2.default.render(_react2.default.createElement(Examples, null), document.getElementById('container'));
 
-},{"./../dist/index.js":3,"./../dist/shared/Tooltip":4,"react":181,"react-dom":41}],7:[function(require,module,exports){
+},{"./../dist/index.js":3,"react":181,"react-dom":41}],7:[function(require,module,exports){
 !function() {
   var d3 = {
     version: "3.5.17"

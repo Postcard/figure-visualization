@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {BarChart, Leaderboard} from './../dist/index.js';
-import Tooltip from './../dist/shared/Tooltip';
 
 class Examples extends React.Component {
 
@@ -134,9 +133,6 @@ class Examples extends React.Component {
   render () {
   	return(
   		<div ref='container' style={{width:'40%', margin:'auto', padding:'60px 0px'}}>
-  			<Tooltip>
-  				coucou
-  			</Tooltip>
   			{this.state.width && (
 		  		<div>
 			  		<p style={{marginTop:'0px'}}>Bar chart:</p>
