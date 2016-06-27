@@ -35,9 +35,9 @@ class Leaderboard extends React.Component {
     // chart container
     let chart = d3.select(ReactFauxDOM.createElement('div'))
       .attr('class', 'figure-visualization leaderboard')
-      .attr({
+      .style({
         width: width,
-        height: height
+        height: 'auto'
       });
 
 
@@ -75,7 +75,7 @@ class Leaderboard extends React.Component {
 
 
     return (
-      <div>
+      <div style={{width: width, height: height || 'auto', overflow:'auto'}}>
         {chart.node().toReact()}
         <style>{css}</style>
       </div>
@@ -99,7 +99,10 @@ Leaderboard.propTypes = {
     })
   }),
   width: React.PropTypes.number.isRequired,
-  height: React.PropTypes.number.isRequired
+  height: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.number
+  ])
 };
 
 export default Leaderboard

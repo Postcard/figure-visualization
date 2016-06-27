@@ -126,18 +126,18 @@ class Examples extends React.Component {
 
   render () {
   	return(
-  		<div ref='container' style={{width:'40%', margin:'auto', paddingTop:'50px'}}>
+  		<div ref='container' style={{width:'40%', margin:'auto', padding:'60px 0px'}}>
   			{this.state.width && (
 		  		<div>
-			  		<p>Bar chart:</p>
-			  		<div style={{height:'200px'}}>
+			  		<p style={{marginTop:'0px'}}>Bar chart:</p>
+			  		<div>
 			  			<BarChart data={this.data.BarChart.data} options={this.data.BarChart.options} height={200} width={this.state.width}/>
 			  		</div>
 			  		<br/>
 			  		<br/>
 			  		<p>Leaderboard:</p>
-			  		<div style={{height:'200px'}}>
-			  			<Leaderboard data={this.data.Leaderboard.data} options={this.data.Leaderboard.options} height={200} width={this.state.width}/>
+			  		<div>
+			  			<Leaderboard data={this.data.Leaderboard.data} options={this.data.Leaderboard.options}  width={this.state.width}/>
 			  		</div>
 		  		</div>
 	  		)}

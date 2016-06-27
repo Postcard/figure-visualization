@@ -68,9 +68,9 @@ var Leaderboard = (function (_React$Component) {
       }, this.props.options);
 
       // chart container
-      var chart = _d32['default'].select(_reactFauxDom2['default'].createElement('div')).attr('class', 'figure-visualization leaderboard').attr({
+      var chart = _d32['default'].select(_reactFauxDom2['default'].createElement('div')).attr('class', 'figure-visualization leaderboard').style({
         width: width,
-        height: height
+        height: 'auto'
       });
 
       // scale
@@ -111,7 +111,7 @@ var Leaderboard = (function (_React$Component) {
 
       return _react2['default'].createElement(
         'div',
-        null,
+        { style: { width: width, height: height || 'auto', overflow: 'auto' } },
         chart.node().toReact(),
         _react2['default'].createElement(
           'style',
@@ -141,7 +141,7 @@ Leaderboard.propTypes = {
     })
   }),
   width: _react2['default'].PropTypes.number.isRequired,
-  height: _react2['default'].PropTypes.number.isRequired
+  height: _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.string, _react2['default'].PropTypes.number])
 };
 
 exports['default'] = Leaderboard;
