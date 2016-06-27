@@ -36,6 +36,10 @@ var _utils2 = _interopRequireDefault(_utils);
 
 var _lodash = require('lodash');
 
+var _sharedTooltip = require('./../shared/Tooltip');
+
+var _sharedTooltip2 = _interopRequireDefault(_sharedTooltip);
+
 var BarChart = (function (_React$Component) {
   _inherits(BarChart, _React$Component);
 
@@ -43,12 +47,18 @@ var BarChart = (function (_React$Component) {
     _classCallCheck(this, BarChart);
 
     _get(Object.getPrototypeOf(BarChart.prototype), 'constructor', this).call(this, props);
-    this.state = {};
+    this.state = {
+      tooltip: {
+        show: false,
+        d: null
+      }
+    };
   }
 
   _createClass(BarChart, [{
     key: 'render',
     value: function render() {
+      var _this = this;
 
       var css = '\n      ' + _utils2['default'].css + '\n    ';
 
@@ -59,6 +69,19 @@ var BarChart = (function (_React$Component) {
 
       var padding = { top: 15, right: 0, bottom: 20, left: 0 };
       var options = (0, _lodash.merge)({
+        tooltip: {
+          show: true,
+          x: {
+            format: function format(d) {
+              return d;
+            }
+          },
+          y: {
+            format: function format(d) {
+              return d;
+            }
+          }
+        },
         axis: {
           x: {
             format: function format(d) {
@@ -152,11 +175,30 @@ var BarChart = (function (_React$Component) {
         return y(d[data.y]) + padding.top;
       }).attr("height", function (d) {
         return height - padding.bottom - padding.top - y(d[data.y]);
-      }).attr("width", barWidth - 1).attr("fill", _utils2['default'].colors.defaultColor);
+      }).attr("width", barWidth - 1).attr("fill", _utils2['default'].colors.defaultColor).on('mouseover', function (d, i) {
+        if (options.tooltip.show && !_this.state.tooltip.show) return _this.setState({ tooltip: { show: true, d: d } });
+      }).on('mouseout', function (d, i) {
+        if (_this.state.tooltip.show) return _this.setState({ tooltip: { show: false } });
+      });
 
       return _react2['default'].createElement(
         'div',
         null,
+        this.state.tooltip.show && _react2['default'].createElement(
+          _sharedTooltip2['default'],
+          null,
+          _react2['default'].createElement(
+            'span',
+            null,
+            options.tooltip.x.format(this.state.tooltip.d[data.x])
+          ),
+          _react2['default'].createElement('br', null),
+          _react2['default'].createElement(
+            'span',
+            null,
+            options.tooltip.y.format(this.state.tooltip.d[data.y])
+          )
+        ),
         chart.node().toReact(),
         _react2['default'].createElement(
           'style',
@@ -177,6 +219,15 @@ BarChart.propTypes = {
     values: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.object).isRequired
   }).isRequired,
   options: _react2['default'].PropTypes.shape({
+    tooltip: _react2['default'].PropTypes.shape({
+      show: _react2['default'].PropTypes.bool,
+      x: _react2['default'].PropTypes.shape({
+        format: _react2['default'].PropTypes.func
+      }),
+      y: _react2['default'].PropTypes.shape({
+        format: _react2['default'].PropTypes.func
+      })
+    }),
     axis: _react2['default'].PropTypes.shape({
       x: _react2['default'].PropTypes.shape({
         format: _react2['default'].PropTypes.func,

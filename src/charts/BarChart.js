@@ -4,12 +4,17 @@ import ReactDOM from 'react-dom';
 import ReactFauxDOM from 'react-faux-dom';
 import utils from './../utils';
 import {merge} from 'lodash';
+import Tooltip from './../shared/Tooltip';
 
 class BarChart extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      tooltip:{
+        show:false,
+        d:null
+      }
     };
   }
 
@@ -22,6 +27,15 @@ class BarChart extends React.Component {
     let {data, width, height} = this.props;
     let padding = {top: 15, right: 0, bottom: 20, left: 0}
     let options = merge({
+      tooltip:{
+        show:true,
+        x:{
+          format:(d)=>{return d;}
+        },
+        y:{
+          format:(d)=>{return d;}
+        }
+      },
       axis:{
         x:{
           format:(d)=>{return d;}
@@ -117,10 +131,19 @@ class BarChart extends React.Component {
       .attr("y", function(d) { return y(d[data.y]) + padding.top; })
       .attr("height", function(d) { return (height - padding.bottom - padding.top) - y(d[data.y]); })
       .attr("width", barWidth - 1)
-      .attr("fill", utils.colors.defaultColor);
+      .attr("fill", utils.colors.defaultColor)
+      .on('mouseover', (d,i) => { if(options.tooltip.show && !this.state.tooltip.show) return this.setState({tooltip:{show:true, d:d}})})
+      .on('mouseout', (d,i) => { if(this.state.tooltip.show) return this.setState({tooltip:{show:false}})});
 
     return (
       <div>
+        {this.state.tooltip.show && (
+          <Tooltip>
+            <span>{options.tooltip.x.format(this.state.tooltip.d[data.x])}</span>
+            <br/>
+            <span>{options.tooltip.y.format(this.state.tooltip.d[data.y])}</span>
+          </Tooltip>
+        )}
         {chart.node().toReact()}
         <style>{css}</style>
       </div>
@@ -135,6 +158,15 @@ BarChart.propTypes = {
     values:React.PropTypes.arrayOf(React.PropTypes.object).isRequired
   }).isRequired,
   options : React.PropTypes.shape({
+    tooltip : React.PropTypes.shape({
+      show: React.PropTypes.bool,
+      x: React.PropTypes.shape({
+        format: React.PropTypes.func
+      }),
+      y: React.PropTypes.shape({
+        format: React.PropTypes.func
+      })
+    }),
     axis : React.PropTypes.shape({
       x: React.PropTypes.shape({
         format: React.PropTypes.func,

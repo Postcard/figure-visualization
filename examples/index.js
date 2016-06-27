@@ -12,6 +12,14 @@ class Examples extends React.Component {
 		this.data = {
 			BarChart:{
 				options:{
+					tooltip:{
+						x:{
+							format:(d)=>{return 'letter: '+d}
+						},
+						y:{
+							format:(d)=>{return 'percentage: '+d}
+						}
+					},
 					axis:{
 						y:{
 							max:10,
@@ -78,8 +86,6 @@ class Examples extends React.Component {
 				}
 			},
 			Leaderboard:{
-				options:{
-				},
 			  data:{
 			  	x:'count',
 			  	y:'letter',
