@@ -84,7 +84,15 @@ class Sankey extends React.Component {
         .style("stroke-width", function(d) { return Math.max(1, d.dy); })
         .sort(function(a, b) { return b.dy - a.dy; });
 
-    link.on('mouseover', (d,i) => { if(options.tooltip.show && !this.state.tooltip.show) return this.setState({tooltip:{show:true, d:d}})})
+    let linkTooltip = (d)=>{ return (
+      <div>
+        <span>{d.source.name + " → " + d.target.name}</span>
+        <br/>
+        <span>{options.tooltip.x.format(d.value)}</span>
+      </div>
+    )};
+
+    link.on('mouseover', (d,i) => { if(options.tooltip.show && !this.state.tooltip.show) return this.setState({tooltip:{show:true, content:linkTooltip(d)}})})
         .on('mouseout', (d,i) => { if(this.state.tooltip.show) return this.setState({tooltip:{show:false}})});
         
 
@@ -105,8 +113,6 @@ class Sankey extends React.Component {
         .attr("width", sankey.nodeWidth())
         .style("fill", utils.colors.defaultColor)
         .style("stroke", utils.colors.defaultColor)
-      .append("title")
-        .text(function(d) { return d.name + "\n" + options.tooltip.x.format(d.value); });
 
     node.append("text")
         .attr("x", -6)
@@ -119,6 +125,17 @@ class Sankey extends React.Component {
         .attr("x", 6 + sankey.nodeWidth())
         .attr("text-anchor", "start");
 
+    let nodeTooltip = (d)=>{ return (
+      <div>
+        <span>{d.name}</span>
+        <br/>
+        <span>{options.tooltip.x.format(d.value)}</span>
+      </div>
+    )};
+
+    node.on('mouseover', (d,i) => { if(options.tooltip.show && !this.state.tooltip.show) return this.setState({tooltip:{show:true, content:nodeTooltip(d)}})})
+        .on('mouseout', (d,i) => { if(this.state.tooltip.show) return this.setState({tooltip:{show:false}})});
+
     function dragmove(d) {
       d3.select(this).attr("transform", "translate(" + d.x + "," + (d.y = Math.max(0, Math.min(height - d.dy, d3.event.y))) + ")");
       sankey.relayout();
@@ -130,9 +147,7 @@ class Sankey extends React.Component {
       <div style={{width: width, height: height || 'auto', overflow:'auto'}}>
         {this.state.tooltip.show && (
           <Tooltip>
-            <span>{this.state.tooltip.d.source.name + " → " + this.state.tooltip.d.target.name}</span>
-            <br/>
-            <span>{options.tooltip.x.format(this.state.tooltip.d.value)}</span>
+            {this.state.tooltip.content}
           </Tooltip>
         )}
         {chart.node().toReact()}

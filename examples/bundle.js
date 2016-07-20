@@ -587,8 +587,12 @@ var Sankey = function (_React$Component) {
         return b.dy - a.dy;
       });
 
+      var linkTooltip = function linkTooltip(d) {
+        return _react2['default'].createElement('div', null, _react2['default'].createElement('span', null, d.source.name + " → " + d.target.name), _react2['default'].createElement('br', null), _react2['default'].createElement('span', null, options.tooltip.x.format(d.value)));
+      };
+
       link.on('mouseover', function (d, i) {
-        if (options.tooltip.show && !_this.state.tooltip.show) return _this.setState({ tooltip: { show: true, d: d } });
+        if (options.tooltip.show && !_this.state.tooltip.show) return _this.setState({ tooltip: { show: true, content: linkTooltip(d) } });
       }).on('mouseout', function (d, i) {
         if (_this.state.tooltip.show) return _this.setState({ tooltip: { show: false } });
       });
@@ -605,9 +609,7 @@ var Sankey = function (_React$Component) {
 
       node.append("rect").attr("height", function (d) {
         return d.dy;
-      }).attr("width", sankey.nodeWidth()).style("fill", _utils2['default'].colors.defaultColor).style("stroke", _utils2['default'].colors.defaultColor).append("title").text(function (d) {
-        return d.name + "\n" + options.tooltip.x.format(d.value);
-      });
+      }).attr("width", sankey.nodeWidth()).style("fill", _utils2['default'].colors.defaultColor).style("stroke", _utils2['default'].colors.defaultColor);
 
       node.append("text").attr("x", -6).attr("y", function (d) {
         return d.dy / 2;
@@ -617,13 +619,23 @@ var Sankey = function (_React$Component) {
         return d.x < width / 2;
       }).attr("x", 6 + sankey.nodeWidth()).attr("text-anchor", "start");
 
+      var nodeTooltip = function nodeTooltip(d) {
+        return _react2['default'].createElement('div', null, _react2['default'].createElement('span', null, d.name), _react2['default'].createElement('br', null), _react2['default'].createElement('span', null, options.tooltip.x.format(d.value)));
+      };
+
+      node.on('mouseover', function (d, i) {
+        if (options.tooltip.show && !_this.state.tooltip.show) return _this.setState({ tooltip: { show: true, content: nodeTooltip(d) } });
+      }).on('mouseout', function (d, i) {
+        if (_this.state.tooltip.show) return _this.setState({ tooltip: { show: false } });
+      });
+
       function dragmove(d) {
         _d32['default'].select(this).attr("transform", "translate(" + d.x + "," + (d.y = Math.max(0, Math.min(height - d.dy, _d32['default'].event.y))) + ")");
         sankey.relayout();
         link.attr("d", path);
       }
 
-      return _react2['default'].createElement('div', { style: { width: width, height: height || 'auto', overflow: 'auto' } }, this.state.tooltip.show && _react2['default'].createElement(_sharedTooltip2['default'], null, _react2['default'].createElement('span', null, this.state.tooltip.d.source.name + " → " + this.state.tooltip.d.target.name), _react2['default'].createElement('br', null), _react2['default'].createElement('span', null, options.tooltip.x.format(this.state.tooltip.d.value))), chart.node().toReact(), _react2['default'].createElement('style', null, css));
+      return _react2['default'].createElement('div', { style: { width: width, height: height || 'auto', overflow: 'auto' } }, this.state.tooltip.show && _react2['default'].createElement(_sharedTooltip2['default'], null, this.state.tooltip.content), chart.node().toReact(), _react2['default'].createElement('style', null, css));
     }
   }]);
 
