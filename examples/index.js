@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BarChart, Leaderboard} from './../dist/index.js';
+import {BarChart, Leaderboard, Sankey} from './../dist/index.js';
+import data from './data.js';
 
 class Examples extends React.Component {
 
@@ -8,111 +9,6 @@ class Examples extends React.Component {
 		super(props);
 		this.state = {
 			width:null
-		}
-		this.data = {
-			BarChart:{
-				options:{
-					tooltip:{
-						x:{
-							format:(d)=>{return 'letter: '+d}
-						},
-						y:{
-							format:(d)=>{return 'percentage: '+d}
-						}
-					},
-					axis:{
-						y:{
-							max:10,
-							format:(d)=>{return d+'%'}
-						},
-						x:{
-							tickValues:['A', 'D']
-						}
-					}
-				},
-			  data:{
-			  	x:'letter',
-			  	y:'count',
-				  values:[
-				    {
-				        "letter": "A",
-				        "count": 1
-				    },
-				    {
-				        "letter": "B",
-				        "count": 3
-				    },
-				    {
-				        "letter": "C",
-				        "count": 3
-				    },
-				    {
-				        "letter": "D",
-				        "count": 4
-				    },
-				    {
-				        "letter": "E",
-				        "count": 1
-				    },
-				    {
-				        "letter": "F",
-				        "count": 4
-				    },
-				    {
-				        "letter": "G",
-				        "count": 2
-				    },
-				    {
-				        "letter": "H",
-				        "count": 4
-				    },
-				    {
-				        "letter": "I",
-				        "count": 3
-				    },
-				    {
-				        "letter": "J",
-				        "count": 3
-				    },
-				    {
-				        "letter": "K",
-				        "count": 1
-				    },
-				    {
-				        "letter": "L",
-				        "count": 2
-				    }
-					]
-				}
-			},
-			Leaderboard:{
-			  data:{
-			  	x:'count',
-			  	y:'letter',
-				  values:[
-				    {
-				        "letter": "A",
-				        "count": 143
-				    },
-				    {
-				        "letter": "B",
-				        "count": 346
-				    },
-				    {
-				        "letter": "C",
-				        "count": 301
-				    },
-				    {
-				        "letter": "D",
-				        "count": 409
-				    },
-				    {
-				        "letter": "E",
-				        "count": 19
-				    }
-					]
-				}
-			}
 		}
 		this.resizeHandler = this.handleResize.bind(this);
 	}
@@ -137,13 +33,52 @@ class Examples extends React.Component {
 		  		<div>
 			  		<p style={{marginTop:'0px'}}>Bar chart:</p>
 			  		<div>
-			  			<BarChart data={this.data.BarChart.data} options={this.data.BarChart.options} height={200} width={this.state.width}/>
+			  			<BarChart 
+			  				data={data.BarChart} 
+			  				options={{
+									tooltip:{
+										x:{
+											format:(d)=>{return 'letter: '+d}
+										},
+										y:{
+											format:(d)=>{return 'percentage: '+d}
+										}
+									},
+									axis:{
+										y:{
+											max:10,
+											format:(d)=>{return d+'%'}
+										},
+										x:{
+											tickValues:['A', 'D']
+										}
+									}
+								}} 
+								height={200} 
+								width={this.state.width}
+							/>
 			  		</div>
 			  		<br/>
 			  		<br/>
 			  		<p>Leaderboard:</p>
 			  		<div>
-			  			<Leaderboard data={this.data.Leaderboard.data} options={this.data.Leaderboard.options}  width={this.state.width}/>
+			  			<Leaderboard 
+			  				data={data.Leaderboard} 
+			  				options={{
+
+			  				}}  
+			  				width={this.state.width}
+			  			/>
+			  		</div>
+			  		<br/>
+			  		<br/>
+			  		<p>Sankey Diagram:</p>
+			  		<div>
+			  			<Sankey
+			  				data={data.Sankey}
+			  				width={this.state.width}
+			  				height={400}
+			  			/>
 			  		</div>
 		  		</div>
 	  		)}
