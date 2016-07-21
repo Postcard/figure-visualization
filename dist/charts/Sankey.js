@@ -210,8 +210,8 @@ Sankey.propTypes = {
     })).isRequired,
     links: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.shape({
       value: _react2['default'].PropTypes.number.isRequired,
-      source: _react2['default'].PropTypes.number.isRequired,
-      target: _react2['default'].PropTypes.number.isRequired
+      source: _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.number, _react2['default'].PropTypes.object]).isRequired,
+      target: _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.number, _react2['default'].PropTypes.object]).isRequired
     })).isRequired
   }).isRequired,
   options: _react2['default'].PropTypes.shape({

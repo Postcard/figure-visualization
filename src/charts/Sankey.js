@@ -52,7 +52,6 @@ class Sankey extends React.Component {
     }, this.props.options)
 
 
-
     // chart container
     let chart = d3.select(ReactFauxDOM.createElement('svg'))
       .attr('class', 'figure-visualization sankey')
@@ -165,8 +164,8 @@ Sankey.propTypes = {
     })).isRequired,
     links:React.PropTypes.arrayOf(React.PropTypes.shape({
       value: React.PropTypes.number.isRequired,
-      source: React.PropTypes.number.isRequired,
-      target: React.PropTypes.number.isRequired
+      source: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.object]).isRequired,
+      target: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.object]).isRequired
     })).isRequired
   }).isRequired,
   options : React.PropTypes.shape({
