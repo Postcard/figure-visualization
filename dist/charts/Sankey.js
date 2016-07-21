@@ -64,7 +64,7 @@ var Sankey = (function (_React$Component) {
     value: function render() {
       var _this = this;
 
-      var css = '\n      ' + _utils2['default'].css + '\n      .figure-visualization.sankey .node rect {\n        fill-opacity: .9;\n        shape-rendering: crispEdges;\n        stroke-width: 0;\n      }\n      .figure-visualization.sankey .node text {\n        text-shadow: 0 1px 0 #fff;\n      }\n      .figure-visualization.sankey .link {\n        fill: none;\n        stroke: #000;\n        stroke-opacity: .2;\n      }\n    ';
+      var css = '\n      ' + _utils2['default'].css + '\n      .figure-visualization.sankey .node rect {\n        fill-opacity: .9;\n        shape-rendering: crispEdges;\n        stroke-width: 0;\n      }\n      .figure-visualization.sankey .node text {\n        text-shadow: 0 1px 0 #fff;\n      }\n      .figure-visualization.sankey .link {\n        fill: none;\n        stroke: ' + _utils2['default'].colors.defaultColor + ';\n        stroke-opacity: .2;\n      }\n    ';
 
       var _props = this.props;
       var data = _props.data;
@@ -99,6 +99,7 @@ var Sankey = (function (_React$Component) {
 
       var container = chart.append('g');
 
+      // LINKS
       var link = container.append("g").selectAll(".link").data(data.links).enter().append("path").attr("class", "link").attr("d", path).style("stroke-width", function (d) {
         return Math.max(1, d.dy);
       }).sort(function (a, b) {
@@ -129,15 +130,10 @@ var Sankey = (function (_React$Component) {
         if (_this.state.tooltip.show) return _this.setState({ tooltip: { show: false } });
       });
 
-      // .text(function(d) { return d.source.name + " → " + d.target.name + "\n" + format(d.value); });
-
+      // NODES
       var node = container.append("g").selectAll(".node").data(data.nodes).enter().append("g").attr("class", "node").attr("transform", function (d) {
         return "translate(" + d.x + "," + d.y + ")";
-      }).call(_d32['default'].behavior.drag().origin(function (d) {
-        return d;
-      }).on("dragstart", function () {
-        this.parentNode.appendChild(this);
-      }).on("drag", dragmove));
+      });
 
       node.append("rect").attr("height", function (d) {
         return d.dy;
@@ -174,12 +170,6 @@ var Sankey = (function (_React$Component) {
       }).on('mouseout', function (d, i) {
         if (_this.state.tooltip.show) return _this.setState({ tooltip: { show: false } });
       });
-
-      function dragmove(d) {
-        _d32['default'].select(this).attr("transform", "translate(" + d.x + "," + (d.y = Math.max(0, Math.min(height - d.dy, _d32['default'].event.y))) + ")");
-        sankey.relayout();
-        link.attr("d", path);
-      }
 
       return _react2['default'].createElement(
         'div',

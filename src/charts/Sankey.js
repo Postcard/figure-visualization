@@ -33,7 +33,7 @@ class Sankey extends React.Component {
       }
       .figure-visualization.sankey .link {
         fill: none;
-        stroke: #000;
+        stroke: ${utils.colors.defaultColor};
         stroke-opacity: .2;
       }
     `
@@ -75,6 +75,8 @@ class Sankey extends React.Component {
 
     let container = chart.append('g');
 
+
+    // LINKS
     let link = container.append("g").selectAll(".link")
         .data(data.links)
       .enter().append("path")
@@ -95,17 +97,13 @@ class Sankey extends React.Component {
         .on('mouseout', (d,i) => { if(this.state.tooltip.show) return this.setState({tooltip:{show:false}})});
         
 
-        // .text(function(d) { return d.source.name + " → " + d.target.name + "\n" + format(d.value); });
 
+    // NODES
     let node = container.append("g").selectAll(".node")
         .data(data.nodes)
       .enter().append("g")
         .attr("class", "node")
-        .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
-      .call(d3.behavior.drag()
-        .origin(function(d) { return d; })
-        .on("dragstart", function() { this.parentNode.appendChild(this); })
-        .on("drag", dragmove));
+        .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
     node.append("rect")
         .attr("height", function(d) { return d.dy; })
@@ -134,13 +132,6 @@ class Sankey extends React.Component {
 
     node.on('mouseover', (d,i) => { if(options.tooltip.show && !this.state.tooltip.show) return this.setState({tooltip:{show:true, content:nodeTooltip(d)}})})
         .on('mouseout', (d,i) => { if(this.state.tooltip.show) return this.setState({tooltip:{show:false}})});
-
-    function dragmove(d) {
-      d3.select(this).attr("transform", "translate(" + d.x + "," + (d.y = Math.max(0, Math.min(height - d.dy, d3.event.y))) + ")");
-      sankey.relayout();
-      link.attr("d", path);
-    }
-
 
     return (
       <div style={{width: width, height: height}}>
