@@ -635,7 +635,7 @@ var Sankey = function (_React$Component) {
         link.attr("d", path);
       }
 
-      return _react2['default'].createElement('div', { style: { width: width, height: height || 'auto', overflow: 'auto' } }, this.state.tooltip.show && _react2['default'].createElement(_sharedTooltip2['default'], null, this.state.tooltip.content), chart.node().toReact(), _react2['default'].createElement('style', null, css));
+      return _react2['default'].createElement('div', { style: { width: width, height: height } }, this.state.tooltip.show && _react2['default'].createElement(_sharedTooltip2['default'], null, this.state.tooltip.content), chart.node().toReact(), _react2['default'].createElement('style', null, css));
     }
   }]);
 

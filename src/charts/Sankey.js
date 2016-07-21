@@ -143,7 +143,7 @@ class Sankey extends React.Component {
 
 
     return (
-      <div style={{width: width, height: height || 'auto', overflow:'auto'}}>
+      <div style={{width: width, height: height}}>
         {this.state.tooltip.show && (
           <Tooltip>
             {this.state.tooltip.content}

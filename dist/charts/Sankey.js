@@ -183,7 +183,7 @@ var Sankey = (function (_React$Component) {
 
       return _react2['default'].createElement(
         'div',
-        { style: { width: width, height: height || 'auto', overflow: 'auto' } },
+        { style: { width: width, height: height } },
         this.state.tooltip.show && _react2['default'].createElement(
           _sharedTooltip2['default'],
           null,
