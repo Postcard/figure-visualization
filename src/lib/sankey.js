@@ -1,6 +1,7 @@
 import d3 from 'd3';
 
-// https://github.com/d3/d3-plugins/blob/master/sankey/sankey.js
+// based on https://github.com/d3/d3-plugins/blob/master/sankey/sankey.js
+
 let sankey = function() {
   var sankey = {},
       nodeWidth = 24,
@@ -130,26 +131,27 @@ let sankey = function() {
       ++x;
     }
 
-    //
-    moveSinksRight(x);
+    // nodes with no outgoing links are assigned the maximum breadth of incoming neighbors plus one.
+    // moveSinksRight(x);
     scaleNodeBreadths((size[0] - nodeWidth) / (x - 1));
   }
 
-  function moveSourcesRight() {
-    nodes.forEach(function(node) {
-      if (!node.targetLinks.length) {
-        node.x = d3.min(node.sourceLinks, function(d) { return d.target.x; }) - 1;
-      }
-    });
-  }
 
-  function moveSinksRight(x) {
-    nodes.forEach(function(node) {
-      if (!node.sourceLinks.length) {
-        node.x = x - 1;
-      }
-    });
-  }
+  // function moveSourcesRight() {
+  //   nodes.forEach(function(node) {
+  //     if (!node.targetLinks.length) {
+  //       node.x = d3.min(node.sourceLinks, function(d) { return d.target.x; }) - 1;
+  //     }
+  //   });
+  // }
+
+  // function moveSinksRight(x) {
+  //   nodes.forEach(function(node) {
+  //     if (!node.sourceLinks.length) {
+  //       node.x = x - 1;
+  //     }
+  //   });
+  // }
 
   function scaleNodeBreadths(kx) {
     nodes.forEach(function(node) {
@@ -255,7 +257,9 @@ let sankey = function() {
     }
 
     function ascendingDepth(a, b) {
-      return a.y - b.y;
+      // return a.y - b.y;
+      // always greatest value on top
+      return (b.dy != a.dy) ? b.dy - a.dy : a.y - b.y;
     }
   }
 
@@ -286,7 +290,9 @@ let sankey = function() {
   }
 
   function center(node) {
-    return node.y + node.dy / 2;
+    // return node.y + node.dy / 2;
+    // align nodes on top
+    return 0;
   }
 
   function value(link) {

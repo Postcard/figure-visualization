@@ -73,8 +73,8 @@ var Sankey = (function (_React$Component) {
 
       var size = [width, height];
       var options = (0, _lodash.merge)({
-        nodeWidth: 24,
-        nodePadding: 8,
+        nodeWidth: 20,
+        nodePadding: 6,
         tooltip: {
           show: true,
           x: {
@@ -95,7 +95,7 @@ var Sankey = (function (_React$Component) {
 
       var path = sankey.link();
 
-      sankey.nodes(data.nodes).links(data.links).layout(32);
+      sankey.nodes(data.nodes).links(data.links).layout(data.nodes.length);
 
       var container = chart.append('g');
 
@@ -131,12 +131,12 @@ var Sankey = (function (_React$Component) {
       });
 
       // NODES
-      var node = container.append("g").selectAll(".node").data(data.nodes).enter().append("g").attr("class", "node").attr("transform", function (d) {
+      var node = container.append("g").selectAll(".node").data(data.nodes).enter().append("g").attr("class", "node").attr("transform", function (d, i) {
         return "translate(" + d.x + "," + d.y + ")";
       });
 
       node.append("rect").attr("height", function (d) {
-        return d.dy;
+        return Math.max(1, d.dy);
       }).attr("width", sankey.nodeWidth()).style("fill", _utils2['default'].colors.defaultColor).style("stroke", _utils2['default'].colors.defaultColor);
 
       node.append("text").attr("x", -6).attr("y", function (d) {

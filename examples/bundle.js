@@ -546,7 +546,7 @@ var Sankey = function (_React$Component) {
     value: function render() {
       var _this = this;
 
-      var css = '\n      ' + _utils2['default'].css + '\n      .figure-visualization.sankey .node rect {\n        fill-opacity: .9;\n        shape-rendering: crispEdges;\n        stroke-width: 0;\n      }\n      .figure-visualization.sankey .node text {\n        text-shadow: 0 1px 0 #fff;\n      }\n      .figure-visualization.sankey .link {\n        fill: none;\n        stroke: #000;\n        stroke-opacity: .2;\n      }\n    ';
+      var css = '\n      ' + _utils2['default'].css + '\n      .figure-visualization.sankey .node rect {\n        fill-opacity: .9;\n        shape-rendering: crispEdges;\n        stroke-width: 0;\n      }\n      .figure-visualization.sankey .node text {\n        text-shadow: 0 1px 0 #fff;\n      }\n      .figure-visualization.sankey .link {\n        fill: none;\n        stroke: ' + _utils2['default'].colors.defaultColor + ';\n        stroke-opacity: .2;\n      }\n    ';
 
       var _props = this.props;
       var data = _props.data;
@@ -555,8 +555,8 @@ var Sankey = function (_React$Component) {
 
       var size = [width, height];
       var options = (0, _lodash.merge)({
-        nodeWidth: 24,
-        nodePadding: 8,
+        nodeWidth: 20,
+        nodePadding: 6,
         tooltip: {
           show: true,
           x: {
@@ -577,10 +577,11 @@ var Sankey = function (_React$Component) {
 
       var path = sankey.link();
 
-      sankey.nodes(data.nodes).links(data.links).layout(32);
+      sankey.nodes(data.nodes).links(data.links).layout(data.nodes.length);
 
       var container = chart.append('g');
 
+      // LINKS
       var link = container.append("g").selectAll(".link").data(data.links).enter().append("path").attr("class", "link").attr("d", path).style("stroke-width", function (d) {
         return Math.max(1, d.dy);
       }).sort(function (a, b) {
@@ -597,18 +598,13 @@ var Sankey = function (_React$Component) {
         if (_this.state.tooltip.show) return _this.setState({ tooltip: { show: false } });
       });
 
-      // .text(function(d) { return d.source.name + " → " + d.target.name + "\n" + format(d.value); });
-
-      var node = container.append("g").selectAll(".node").data(data.nodes).enter().append("g").attr("class", "node").attr("transform", function (d) {
+      // NODES
+      var node = container.append("g").selectAll(".node").data(data.nodes).enter().append("g").attr("class", "node").attr("transform", function (d, i) {
         return "translate(" + d.x + "," + d.y + ")";
-      }).call(_d32['default'].behavior.drag().origin(function (d) {
-        return d;
-      }).on("dragstart", function () {
-        this.parentNode.appendChild(this);
-      }).on("drag", dragmove));
+      });
 
       node.append("rect").attr("height", function (d) {
-        return d.dy;
+        return Math.max(1, d.dy);
       }).attr("width", sankey.nodeWidth()).style("fill", _utils2['default'].colors.defaultColor).style("stroke", _utils2['default'].colors.defaultColor);
 
       node.append("text").attr("x", -6).attr("y", function (d) {
@@ -628,12 +624,6 @@ var Sankey = function (_React$Component) {
       }).on('mouseout', function (d, i) {
         if (_this.state.tooltip.show) return _this.setState({ tooltip: { show: false } });
       });
-
-      function dragmove(d) {
-        _d32['default'].select(this).attr("transform", "translate(" + d.x + "," + (d.y = Math.max(0, Math.min(height - d.dy, _d32['default'].event.y))) + ")");
-        sankey.relayout();
-        link.attr("d", path);
-      }
 
       return _react2['default'].createElement('div', { style: { width: width, height: height } }, this.state.tooltip.show && _react2['default'].createElement(_sharedTooltip2['default'], null, this.state.tooltip.content), chart.node().toReact(), _react2['default'].createElement('style', null, css));
     }
@@ -695,7 +685,8 @@ var _d3 = require('d3');
 
 var _d32 = _interopRequireDefault(_d3);
 
-// https://github.com/d3/d3-plugins/blob/master/sankey/sankey.js
+// based on https://github.com/d3/d3-plugins/blob/master/sankey/sankey.js
+
 var sankey = function sankey() {
   var sankey = {},
       nodeWidth = 24,
@@ -819,28 +810,26 @@ var sankey = function sankey() {
       ++x;
     }
 
-    //
-    moveSinksRight(x);
+    // nodes with no outgoing links are assigned the maximum breadth of incoming neighbors plus one.
+    // moveSinksRight(x);
     scaleNodeBreadths((size[0] - nodeWidth) / (x - 1));
   }
 
-  function moveSourcesRight() {
-    nodes.forEach(function (node) {
-      if (!node.targetLinks.length) {
-        node.x = _d32["default"].min(node.sourceLinks, function (d) {
-          return d.target.x;
-        }) - 1;
-      }
-    });
-  }
+  // function moveSourcesRight() {
+  //   nodes.forEach(function(node) {
+  //     if (!node.targetLinks.length) {
+  //       node.x = d3.min(node.sourceLinks, function(d) { return d.target.x; }) - 1;
+  //     }
+  //   });
+  // }
 
-  function moveSinksRight(x) {
-    nodes.forEach(function (node) {
-      if (!node.sourceLinks.length) {
-        node.x = x - 1;
-      }
-    });
-  }
+  // function moveSinksRight(x) {
+  //   nodes.forEach(function(node) {
+  //     if (!node.sourceLinks.length) {
+  //       node.x = x - 1;
+  //     }
+  //   });
+  // }
 
   function scaleNodeBreadths(kx) {
     nodes.forEach(function (node) {
@@ -946,7 +935,9 @@ var sankey = function sankey() {
     }
 
     function ascendingDepth(a, b) {
-      return a.y - b.y;
+      // return a.y - b.y;
+      // always greatest value on top
+      return b.dy != a.dy ? b.dy - a.dy : a.y - b.y;
     }
   }
 
@@ -978,7 +969,9 @@ var sankey = function sankey() {
   }
 
   function center(node) {
-    return node.y + node.dy / 2;
+    // return node.y + node.dy / 2;
+    // align nodes on top
+    return 0;
   }
 
   function value(link) {
@@ -1471,7 +1464,7 @@ var Examples = function (_React$Component) {
 						_react2.default.createElement(_index.Sankey, {
 							data: _data2.default.Sankey,
 							width: this.state.width,
-							height: 400
+							height: 200
 						})
 					)
 				)

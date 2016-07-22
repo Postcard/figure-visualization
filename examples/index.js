@@ -77,7 +77,7 @@ class Examples extends React.Component {
 			  			<Sankey
 			  				data={data.Sankey}
 			  				width={this.state.width}
-			  				height={400}
+			  				height={200}
 			  			/>
 			  		</div>
 		  		</div>

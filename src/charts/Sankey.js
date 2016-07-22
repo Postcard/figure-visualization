@@ -41,8 +41,8 @@ class Sankey extends React.Component {
     let {data, width, height} = this.props;
     let size = [width, height];
     let options = merge({
-      nodeWidth: 24,
-      nodePadding: 8,
+      nodeWidth: 20,
+      nodePadding: 6,
       tooltip:{
         show:true,
         x:{
@@ -70,7 +70,7 @@ class Sankey extends React.Component {
     sankey
         .nodes(data.nodes)
         .links(data.links)
-        .layout(32);
+        .layout(data.nodes.length);
 
 
     let container = chart.append('g');
@@ -103,10 +103,10 @@ class Sankey extends React.Component {
         .data(data.nodes)
       .enter().append("g")
         .attr("class", "node")
-        .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+        .attr("transform", function(d, i) { return "translate(" + d.x + "," + d.y + ")"; });
 
     node.append("rect")
-        .attr("height", function(d) { return d.dy; })
+        .attr("height", function(d) { return Math.max(1, d.dy); })
         .attr("width", sankey.nodeWidth())
         .style("fill", utils.colors.defaultColor)
         .style("stroke", utils.colors.defaultColor)
