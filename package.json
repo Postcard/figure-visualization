@@ -1,6 +1,6 @@
 {
   "name": "figure-visualization",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "The Figure data visualization library",
   "private": true,
   "main": "dist/index.js",
