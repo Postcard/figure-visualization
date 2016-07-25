@@ -151,12 +151,12 @@ Sankey.propTypes = {
   data: React.PropTypes.shape({
     nodes:React.PropTypes.arrayOf(React.PropTypes.shape({
       id: React.PropTypes.string.isRequired,
-      name: React.PropTypes.string.isRequired
+      name: React.PropTypes.string.isRequired,
+      value: React.PropTypes.number.isRequired
     })).isRequired,
     links:React.PropTypes.arrayOf(React.PropTypes.shape({
-      value: React.PropTypes.number.isRequired,
-      source: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.object]).isRequired,
-      target: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.object]).isRequired
+      source: React.PropTypes.string.isRequired,
+      target: React.PropTypes.string.isRequired
     })).isRequired
   }).isRequired,
   options : React.PropTypes.shape({

@@ -636,12 +636,12 @@ Sankey.propTypes = {
   data: _react2['default'].PropTypes.shape({
     nodes: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.shape({
       id: _react2['default'].PropTypes.string.isRequired,
-      name: _react2['default'].PropTypes.string.isRequired
+      name: _react2['default'].PropTypes.string.isRequired,
+      value: _react2['default'].PropTypes.number.isRequired
     })).isRequired,
     links: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.shape({
-      value: _react2['default'].PropTypes.number.isRequired,
-      source: _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.number, _react2['default'].PropTypes.object]).isRequired,
-      target: _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.number, _react2['default'].PropTypes.object]).isRequired
+      source: _react2['default'].PropTypes.string.isRequired,
+      target: _react2['default'].PropTypes.string.isRequired
     })).isRequired
   }).isRequired,
   options: _react2['default'].PropTypes.shape({
@@ -686,6 +686,10 @@ var _d3 = require('d3');
 var _d32 = _interopRequireDefault(_d3);
 
 // based on https://github.com/d3/d3-plugins/blob/master/sankey/sankey.js
+// modified:
+//   - values are set on nodes instead of links
+//   - nodes are sorted descending and aligned on top
+//   - nodes with no outgoing links are assigned the maximum breadth of incoming neighbors plus one.
 
 var sankey = function sankey() {
   var sankey = {},
@@ -727,7 +731,7 @@ var sankey = function sankey() {
 
   sankey.layout = function (iterations) {
     computeNodeLinks();
-    computeNodeValues();
+    computeLinkValues();
     computeNodeBreadths();
     computeNodeDepths(iterations);
     computeLinkDepths();
@@ -763,7 +767,6 @@ var sankey = function sankey() {
   };
 
   // Populate the sourceLinks and targetLinks for each node.
-  // Also, if the source and target are not objects, assume they are indices.
   function computeNodeLinks() {
     nodes.forEach(function (node) {
       node.sourceLinks = [];
@@ -772,24 +775,30 @@ var sankey = function sankey() {
     links.forEach(function (link) {
       var source = link.source,
           target = link.target;
-      if (typeof source === "number") source = link.source = nodes[link.source];
-      if (typeof target === "number") target = link.target = nodes[link.target];
+
+      if (typeof source === "string") source = link.source = nodes.filter(function (node) {
+        return node.id == link.source;
+      })[0];
+      if (typeof target === "string") target = link.target = nodes.filter(function (node) {
+        return node.id == link.target;
+      })[0];
+
       source.sourceLinks.push(link);
       target.targetLinks.push(link);
     });
   }
 
-  // Compute the value (size) of each node by summing the associated links.
-  function computeNodeValues() {
-    nodes.forEach(function (node) {
-      node.value = Math.max(_d32["default"].sum(node.sourceLinks, value), _d32["default"].sum(node.targetLinks, value));
+  // Compute the value of each link by summing the associated targets.
+  function computeLinkValues() {
+    links.forEach(function (link) {
+      link.value = link.target.value;
     });
   }
 
   // Iteratively assign the breadth (x-position) for each node.
   // Nodes are assigned the maximum breadth of incoming neighbors plus one;
   // nodes with no incoming links are assigned breadth zero, while
-  // nodes with no outgoing links are assigned the maximum breadth.
+  // nodes with no outgoing links are assigned the maximum breadth of incoming neighbors plus one.
   function computeNodeBreadths() {
     var remainingNodes = nodes,
         nextNodes,
@@ -810,26 +819,8 @@ var sankey = function sankey() {
       ++x;
     }
 
-    // nodes with no outgoing links are assigned the maximum breadth of incoming neighbors plus one.
-    // moveSinksRight(x);
     scaleNodeBreadths((size[0] - nodeWidth) / (x - 1));
   }
-
-  // function moveSourcesRight() {
-  //   nodes.forEach(function(node) {
-  //     if (!node.targetLinks.length) {
-  //       node.x = d3.min(node.sourceLinks, function(d) { return d.target.x; }) - 1;
-  //     }
-  //   });
-  // }
-
-  // function moveSinksRight(x) {
-  //   nodes.forEach(function(node) {
-  //     if (!node.sourceLinks.length) {
-  //       node.x = x - 1;
-  //     }
-  //   });
-  // }
 
   function scaleNodeBreadths(kx) {
     nodes.forEach(function (node) {
@@ -844,7 +835,6 @@ var sankey = function sankey() {
       return d.values;
     });
 
-    //
     initializeNodeDepth();
     resolveCollisions();
     for (var alpha = 1; iterations > 0; --iterations) {
@@ -935,8 +925,6 @@ var sankey = function sankey() {
     }
 
     function ascendingDepth(a, b) {
-      // return a.y - b.y;
-      // always greatest value on top
       return b.dy != a.dy ? b.dy - a.dy : a.y - b.y;
     }
   }
@@ -969,8 +957,6 @@ var sankey = function sankey() {
   }
 
   function center(node) {
-    // return node.y + node.dy / 2;
-    // align nodes on top
     return 0;
   }
 
@@ -1281,50 +1267,51 @@ exports.default = {
 			Sankey: {
 						"nodes": [{
 									"name": "A",
-									"id": "a"
+									"id": "a",
+									"value": 100
 						}, {
 									"name": "B",
-									"id": "b"
+									"id": "b",
+									"value": 80
 						}, {
 									"name": "C",
-									"id": "c"
+									"id": "c",
+									"value": 50
 						}, {
 									"name": "D",
-									"id": "d"
-						}, {
-									"name": "E",
-									"id": "e"
-						}, {
-									"name": "F",
-									"id": "f"
-						}, {
-									"name": "G",
-									"id": "g"
-						}],
-						"links": [{
-									"source": 0,
-									"target": 1,
-									"value": 40
-						}, {
-									"source": 0,
-									"target": 2,
-									"value": 60
-						}, {
-									"source": 2,
-									"target": 3,
+									"id": "d",
 									"value": 30
 						}, {
-									"source": 2,
-									"target": 4,
+									"name": "E",
+									"id": "e",
 									"value": 10
 						}, {
-									"source": 3,
-									"target": 5,
+									"name": "F",
+									"id": "f",
 									"value": 10
 						}, {
-									"source": 3,
-									"target": 6,
-									"value": 20
+									"name": "G",
+									"id": "g",
+									"value": 5
+						}],
+						"links": [{
+									"source": "a",
+									"target": "b"
+						}, {
+									"source": "b",
+									"target": "c"
+						}, {
+									"source": "b",
+									"target": "d"
+						}, {
+									"source": "c",
+									"target": "e"
+						}, {
+									"source": "c",
+									"target": "f"
+						}, {
+									"source": "c",
+									"target": "g"
 						}]
 			}
 };

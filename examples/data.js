@@ -83,63 +83,64 @@ export default {
    "nodes" : [
       {
          "name" : "A",
-         "id" : "a"
+         "id" : "a",
+         "value": 100
       },
       {
          "name" : "B",
-         "id" : "b"
+         "id" : "b",
+         "value": 80
       },
       {
          "name" : "C",
-         "id" : "c"
+         "id" : "c",
+         "value": 50
       },
       {
          "name" : "D",
-         "id" : "d"
+         "id" : "d",
+         "value": 30
       },
       {
          "name" : "E",
-         "id" : "e"
+         "id" : "e",
+         "value": 10
       },
       {
          "name" : "F",
-         "id" : "f"
+         "id" : "f",
+         "value": 10
       },
       {
          "name" : "G",
-         "id" : "g"
+         "id" : "g",
+         "value": 5
       }
    ],
    "links" : [
       {
-         "source" : 0,
-         "target" : 1,
-         "value" : 40
+         "source" : "a",
+         "target" : "b"
       },
       {
-         "source" : 0,
-         "target" : 2,
-         "value" : 60
+         "source" : "b",
+         "target" : "c"
       },
       {
-         "source" : 2,
-         "target" : 3,
-         "value" : 30
+         "source" : "b",
+         "target" : "d"
       },
       {
-         "source" : 2,
-         "target" : 4,
-         "value" : 10
+         "source" : "c",
+         "target" : "e"
       },
       {
-         "source" : 3,
-         "target" : 5,
-         "value" : 10
+         "source" : "c",
+         "target" : "f"
       },
       {
-         "source" : 3,
-         "target" : 6,
-         "value" : 20
+         "source" : "c",
+         "target" : "g"
       }
   	]
 	}
