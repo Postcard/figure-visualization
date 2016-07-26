@@ -77,9 +77,18 @@ var Sankey = (function (_React$Component) {
         nodePadding: 6,
         tooltip: {
           show: true,
-          x: {
-            format: function format(d) {
-              return d;
+          node: {
+            x: {
+              format: function format(d) {
+                return d.value;
+              }
+            }
+          },
+          link: {
+            x: {
+              format: function format(d) {
+                return d.value;
+              }
             }
           }
         }
@@ -119,7 +128,7 @@ var Sankey = (function (_React$Component) {
           _react2['default'].createElement(
             'span',
             null,
-            options.tooltip.x.format(d.value)
+            options.tooltip.link.x.format(d)
           )
         );
       };
@@ -160,7 +169,7 @@ var Sankey = (function (_React$Component) {
           _react2['default'].createElement(
             'span',
             null,
-            options.tooltip.x.format(d.value)
+            options.tooltip.node.x.format(d)
           )
         );
       };
@@ -207,8 +216,15 @@ Sankey.propTypes = {
   options: _react2['default'].PropTypes.shape({
     tooltip: _react2['default'].PropTypes.shape({
       show: _react2['default'].PropTypes.bool,
-      x: _react2['default'].PropTypes.shape({
-        format: _react2['default'].PropTypes.func
+      node: _react2['default'].PropTypes.shape({
+        x: _react2['default'].PropTypes.shape({
+          format: _react2['default'].PropTypes.func
+        })
+      }),
+      link: _react2['default'].PropTypes.shape({
+        x: _react2['default'].PropTypes.shape({
+          format: _react2['default'].PropTypes.func
+        })
       })
     })
   }),

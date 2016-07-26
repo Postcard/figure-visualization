@@ -45,8 +45,15 @@ class Sankey extends React.Component {
       nodePadding: 6,
       tooltip:{
         show:true,
-        x:{
-          format:(d)=>{return d;}
+        node:{
+          x:{
+            format:(d)=>{return d.value;}
+          }
+        },
+        link:{
+          x:{
+            format:(d)=>{return d.value;}
+          }
         }
       },
     }, this.props.options)
@@ -89,7 +96,7 @@ class Sankey extends React.Component {
       <div>
         <span>{d.source.name + " → " + d.target.name}</span>
         <br/>
-        <span>{options.tooltip.x.format(d.value)}</span>
+        <span>{options.tooltip.link.x.format(d)}</span>
       </div>
     )};
 
@@ -126,7 +133,7 @@ class Sankey extends React.Component {
       <div>
         <span>{d.name}</span>
         <br/>
-        <span>{options.tooltip.x.format(d.value)}</span>
+        <span>{options.tooltip.node.x.format(d)}</span>
       </div>
     )};
 
@@ -162,8 +169,15 @@ Sankey.propTypes = {
   options : React.PropTypes.shape({
     tooltip : React.PropTypes.shape({
       show: React.PropTypes.bool,
-      x: React.PropTypes.shape({
-        format: React.PropTypes.func
+      node:React.PropTypes.shape({
+        x: React.PropTypes.shape({
+          format: React.PropTypes.func
+        })
+      }),
+      link:React.PropTypes.shape({
+        x: React.PropTypes.shape({
+          format: React.PropTypes.func
+        })
       })
     })
   }),

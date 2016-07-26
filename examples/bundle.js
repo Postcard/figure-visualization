@@ -559,9 +559,18 @@ var Sankey = function (_React$Component) {
         nodePadding: 6,
         tooltip: {
           show: true,
-          x: {
-            format: function format(d) {
-              return d;
+          node: {
+            x: {
+              format: function format(d) {
+                return d.value;
+              }
+            }
+          },
+          link: {
+            x: {
+              format: function format(d) {
+                return d.value;
+              }
             }
           }
         }
@@ -589,7 +598,7 @@ var Sankey = function (_React$Component) {
       });
 
       var linkTooltip = function linkTooltip(d) {
-        return _react2['default'].createElement('div', null, _react2['default'].createElement('span', null, d.source.name + " → " + d.target.name), _react2['default'].createElement('br', null), _react2['default'].createElement('span', null, options.tooltip.x.format(d.value)));
+        return _react2['default'].createElement('div', null, _react2['default'].createElement('span', null, d.source.name + " → " + d.target.name), _react2['default'].createElement('br', null), _react2['default'].createElement('span', null, options.tooltip.link.x.format(d)));
       };
 
       link.on('mouseover', function (d, i) {
@@ -616,7 +625,7 @@ var Sankey = function (_React$Component) {
       }).attr("x", 6 + sankey.nodeWidth()).attr("text-anchor", "start");
 
       var nodeTooltip = function nodeTooltip(d) {
-        return _react2['default'].createElement('div', null, _react2['default'].createElement('span', null, d.name), _react2['default'].createElement('br', null), _react2['default'].createElement('span', null, options.tooltip.x.format(d.value)));
+        return _react2['default'].createElement('div', null, _react2['default'].createElement('span', null, d.name), _react2['default'].createElement('br', null), _react2['default'].createElement('span', null, options.tooltip.node.x.format(d)));
       };
 
       node.on('mouseover', function (d, i) {
@@ -647,8 +656,15 @@ Sankey.propTypes = {
   options: _react2['default'].PropTypes.shape({
     tooltip: _react2['default'].PropTypes.shape({
       show: _react2['default'].PropTypes.bool,
-      x: _react2['default'].PropTypes.shape({
-        format: _react2['default'].PropTypes.func
+      node: _react2['default'].PropTypes.shape({
+        x: _react2['default'].PropTypes.shape({
+          format: _react2['default'].PropTypes.func
+        })
+      }),
+      link: _react2['default'].PropTypes.shape({
+        x: _react2['default'].PropTypes.shape({
+          format: _react2['default'].PropTypes.func
+        })
       })
     })
   }),
@@ -1450,6 +1466,17 @@ var Examples = function (_React$Component) {
 						null,
 						_react2.default.createElement(_index.Sankey, {
 							data: _data2.default.Sankey,
+							options: {
+								tooltip: {
+									link: {
+										x: {
+											format: function format(d) {
+												return (d.target.value / d.source.value * 100).toFixed(2) + '%';
+											}
+										}
+									}
+								}
+							},
 							width: this.state.width,
 							height: 200
 						})

@@ -76,6 +76,15 @@ class Examples extends React.Component {
 			  		<div>
 			  			<Sankey
 			  				data={data.Sankey}
+			  				options={{
+									tooltip:{
+										link:{
+											x:{
+												format:(d)=>{ return ((d.target.value/d.source.value) * 100).toFixed(2) + '%'}
+											}
+										}
+									},
+								}} 
 			  				width={this.state.width}
 			  				height={200}
 			  			/>
